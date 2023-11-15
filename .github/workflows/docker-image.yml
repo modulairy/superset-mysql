@@ -3,6 +3,9 @@ name: ci
 on:
   workflow_dispatch:
     inputs:
+      version:
+        description: 'Release Version'     
+        required: true
       logLevel:
         description: 'Log level'     
         required: true
@@ -37,13 +40,18 @@ jobs:
         uses:  docker/build-push-action@v5
         with:
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
-          labels: ${{ steps.meta.outputs.labels }}
+          tags: ${{ github.event.inputs.version }}
+          labels: ${{ github.event.inputs.version }}
           context: .
           platforms: linux/amd64  
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
+      -
+        name: Publish to ARM Architecture
+        run: |
+          docker tag modulairy/superset-mysql modulairy/superset-mysql:arm
+          docker push modulairy/superset-mysql:arm
       - 
         name: Push Readme to Docker Hub
         uses: peter-evans/dockerhub-description@v2
@@ -51,8 +59,3 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USER_NAME }}
           password: ${{ secrets.DOCKER_HUB }}
           repository: modulairy/superset-mysql
-      -
-        name: Publish to ARM Architecture
-        run: |
-          docker tag modulairy/superset-mysql modulairy/superset-mysql:arm
-          docker push modulairy/superset-mysql:arm
