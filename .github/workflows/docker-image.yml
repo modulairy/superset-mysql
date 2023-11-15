@@ -43,15 +43,10 @@ jobs:
           tags: ${{ github.event.inputs.version }}
           labels: ${{ github.event.inputs.version }}
           context: .
-          platforms: linux/amd64  
+          platforms: linux/amd64,linux/arm64
       -
         name: Image digest
         run: echo ${{ steps.docker_build.outputs.digest }}
-      -
-        name: Publish to ARM Architecture
-        run: |
-          docker tag modulairy/superset-mysql modulairy/superset-mysql:arm
-          docker push modulairy/superset-mysql:arm
       - 
         name: Push Readme to Docker Hub
         uses: peter-evans/dockerhub-description@v2
