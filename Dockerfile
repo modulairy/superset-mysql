@@ -8,7 +8,6 @@ RUN apt-get install default-libmysqlclient-dev
 # RUN apt-get install pkg-config
 RUN pip install --upgrade pip
 RUN pip install mysql-connector-python
-RUN pip install mysqlclient
 RUN pip install psycopg2-binary
 RUN pip install prophet
 RUN pip install Authlib
