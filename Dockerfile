@@ -2,11 +2,13 @@ FROM apache/superset:4.1.1
 # Switching to root to install the required packages
 USER root
 RUN apt-get update && apt-get upgrade -y &&	apt-get install -y curl links zip unzip basez python3-mysqldb python3-ldap python3-psycopg2 python3-psycopg2cffi
-RUN apt-get install python3-dev default-libmysqlclient-dev 
-# build-essential pkg-config
+# RUN apt-get install python3-dev 
+RUN apt-get install default-libmysqlclient-dev 
+# RUN apt-get install build-essential 
+# RUN apt-get install pkg-config
 RUN pip install --upgrade pip
 RUN pip install mysql-connector-python
-# RUN pip install mysqlclient
+RUN pip install mysqlclient
 RUN pip install psycopg2-binary
 RUN pip install prophet
 RUN pip install Authlib
