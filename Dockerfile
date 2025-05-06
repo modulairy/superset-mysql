@@ -2,8 +2,13 @@ FROM apache/superset:4.1.2
 # Switching to root to install the required packages
 USER root
 RUN apt-get update && apt-get upgrade -y &&	apt-get install -y curl links zip unzip basez python3-mysqldb python3-ldap python3-psycopg2 python3-psycopg2cffi
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    default-libmysqlclient-dev \
+    pkg-config \
+    libssl-dev \
+    libffi-dev
 # RUN apt-get install python3-dev 
-RUN apt-get install default-libmysqlclient-dev 
 # RUN apt-get install build-essential 
 # RUN apt-get install pkg-config
 RUN pip install --upgrade pip
